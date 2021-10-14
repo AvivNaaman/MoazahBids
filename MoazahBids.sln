@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoazahBids.Web", "MoazahBids.Web\MoazahBids.Web.csproj", "{979ADAB4-2509-430D-B512-C2E90DF60FAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoazahBids.Domain", "MoazahBids.Domain\MoazahBids.Domain.csproj", "{C147D0A1-4E30-4A26-85D2-29DF91E8B3BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{979ADAB4-2509-430D-B512-C2E90DF60FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979ADAB4-2509-430D-B512-C2E90DF60FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979ADAB4-2509-430D-B512-C2E90DF60FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979ADAB4-2509-430D-B512-C2E90DF60FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C147D0A1-4E30-4A26-85D2-29DF91E8B3BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C147D0A1-4E30-4A26-85D2-29DF91E8B3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C147D0A1-4E30-4A26-85D2-29DF91E8B3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C147D0A1-4E30-4A26-85D2-29DF91E8B3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33C90C23-42A1-4161-B1F1-BAAB6B5EC530}
+	EndGlobalSection
+EndGlobal

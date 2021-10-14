@@ -1,0 +1,49 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    string GetCellClasses(BidOffer o)
+    {
+        if (o.IsComplete && o.Status == BidOfferStatus.Relevant)
+            return "bg-success";
+        else if (o.Status == BidOfferStatus.Relevant)
+            return "bg-warning";
+        else
+            return "bg-danger";
+    }
+}
+
+<h2>לוח בקרה</h2>
+<h5>לחץ על דרישה או הצעה לפרטים נוספים אודותיה</h5>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>דרישה</th>
+            <th>הצעה 1</th>
+            <th>הצעה 2</th>
+            <th>הצעה 3</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bid in Model.Bids)
+        {
+            <tr>
+                <td><a asp-area="" asp-controller="Bids" asp-action="Details" asp-route-id="@bid.Id">@bid.Name</a></td>
+                @for (var i = 0; i < 3; i++)
+                {
+                    if (bid.Offers.Count > i)
+                    {
+                        var b = bid.Offers[i];
+                        <td class="@GetCellClasses(b)"><a asp-area="" asp-controller="Offers" asp-action="Details" asp-route-id="@b.Id">@b.TotalTaxedPrice : #@b.SupplierId</a></td>
+                    }
+                }
+                @if (bid.Offers.Count < 3)
+                {
+                    <td colspan="@(3-bid.Offers.Count)" class="text-center"><i>לא התקבלו עדיין הצעות מתאימות לדרישה</i></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+

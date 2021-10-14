@@ -1,0 +1,89 @@
+﻿@model MoazahBids.Domain.Entities.Bid
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Bid</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                שם הדרישה
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                הערות כלליות
+                <textarea asp-for="Description" class="form-control" ></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsHidden" /> @Html.DisplayNameFor(model => model.IsHidden)
+                </label>
+            </div>
+            <div class="form-group">
+                תאריך יצירה
+                <input asp-for="CreatedDate" class="form-control" disabled/>
+            </div>
+            <div class="form-group">
+                תאריך אחרון להגשת הצעות
+                <input asp-for="LastCallDate" class="form-control" />
+                <span asp-validation-for="LastCallDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+        <ul class="list-group">
+            @for (var i = 0; i < Model.Items.Count; i++)
+            {
+                <li>
+                    <input asp-for="Items[i].Name" class="form-control" placeholder="שם" disabled/>
+                    :
+                    <input asp-for="Items[i].RequiredQuantity" class="form-control" placeholder="כמות"/>
+                    <button class="btn btn-outline-danger" type="button">&times;;</button>
+                </li>
+            }
+        </ul>
+        </form>
+
+        <h5>פריטים</h5>
+
+        @*|
+        <form asp-action="AddItem" method="post" asp-route-id="@Model.Id">
+            <input type="hidden" name="BidId" value="@Model.Id" />
+            <div class="form-group">
+                <label class="control-label">שם המוצר</label>
+                <input name="Name" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">כמות נדרשת</label>
+                <input name="RequiredQuantity" class="form-control" required min="1"/>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">הערות</label>
+                <textarea name="Notes" class="form-control" ></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">הוסף</button>
+        </form>*@
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        var nextToInsert = @Model.Items.Count;
+    </script>
+}
