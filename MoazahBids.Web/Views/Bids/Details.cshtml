@@ -9,25 +9,28 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            תיאור
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
+            תאריך הוספה
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
+            @Model.CreatedDate.ToShortDateString()
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastCallDate)
+            תאריך אחרון להגשת הצעות
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastCallDate)
+            @Model.LastCallDate.ToShortDateString()
         </dd>
     </dl>
 </div>
+<h5>פריטים</h5>
+@await Html.PartialAsync("BidItemsList", Model.Items)
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">עריכה</a> |
     <a asp-page="/Index">למסך ראשי</a>

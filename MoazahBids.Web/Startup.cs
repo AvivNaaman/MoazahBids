@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MoazahBids.Web.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MoazahBids.Web
 {
@@ -28,7 +30,22 @@ namespace MoazahBids.Web
         {
             services.AddAntiforgery();
             services.AddRazorPages();
+
+
             services.AddDbContext<BidsDbContext>(db => db.UseSqlite(Configuration.GetConnectionString("Bids")));
+
+            services.AddScoped<IEmailSender, FakeEmailSender>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(identity =>
+            {
+                identity.SignIn.RequireConfirmedEmail = false;
+                identity.SignIn.RequireConfirmedPhoneNumber = false;
+
+                identity.Password.RequireNonAlphanumeric = false;
+            })
+                .AddEntityFrameworkStores<BidsDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddScoped<IBidsService, BidsService>();
         }
 
@@ -51,6 +68,7 @@ namespace MoazahBids.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

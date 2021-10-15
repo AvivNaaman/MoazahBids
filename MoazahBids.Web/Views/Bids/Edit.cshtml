@@ -1,16 +1,16 @@
 ﻿@model MoazahBids.Domain.Entities.Bid
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "עריכת דרישה";
 }
 
-<h1>Edit</h1>
+<h1>עריכת דרישה</h1>
 
-<h4>Bid</h4>
 <hr />
+<h4>מידע כללי</h4>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -20,70 +20,59 @@
             </div>
             <div class="form-group">
                 הערות כלליות
-                <textarea asp-for="Description" class="form-control" ></textarea>
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsHidden" /> @Html.DisplayNameFor(model => model.IsHidden)
-                </label>
-            </div>
             <div class="form-group">
-                תאריך יצירה
-                <input asp-for="CreatedDate" class="form-control" disabled/>
+                נוצר
+                <input asp-for="CreatedDate"  class="form-control" disabled />
             </div>
             <div class="form-group">
                 תאריך אחרון להגשת הצעות
-                <input asp-for="LastCallDate" class="form-control" />
+                <input asp-for="LastCallDate" type="date" class="form-control" />
                 <span asp-validation-for="LastCallDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="שמור" class="btn btn-primary" />
             </div>
 
-        <ul class="list-group">
-            @for (var i = 0; i < Model.Items.Count; i++)
-            {
-                <li>
-                    <input asp-for="Items[i].Name" class="form-control" placeholder="שם" disabled/>
-                    :
-                    <input asp-for="Items[i].RequiredQuantity" class="form-control" placeholder="כמות"/>
-                    <button class="btn btn-outline-danger" type="button">&times;;</button>
-                </li>
-            }
-        </ul>
         </form>
 
-        <h5>פריטים</h5>
 
-        @*|
-        <form asp-action="AddItem" method="post" asp-route-id="@Model.Id">
+        <hr />
+        <h4>פריטים</h4>
+        <h6>פריטים קיימים</h6>
+
+        @await Html.PartialAsync("BidItemsList", Model.Items)
+
+        <form asp-action="AddItem" method="post" asp-route-id="@Model.Id" class="border rounded-2 p-2 mt-3">
+        <h6>פריט חדש</h6>
             <input type="hidden" name="BidId" value="@Model.Id" />
             <div class="form-group">
                 <label class="control-label">שם המוצר</label>
-                <input name="Name" class="form-control" required/>
+                <input name="Name" class="form-control" required />
             </div>
             <div class="form-group">
                 <label class="control-label">כמות נדרשת</label>
-                <input name="RequiredQuantity" class="form-control" required min="1"/>
+                <input name="RequiredQuantity" class="form-control" required min="1" />
             </div>
             <div class="form-group">
-                <label  class="control-label">הערות</label>
-                <textarea name="Notes" class="form-control" ></textarea>
+                <label class="control-label">הערות</label>
+                <textarea name="Notes" class="form-control"></textarea>
             </div>
-            <button class="btn btn-primary" type="submit">הוסף</button>
-        </form>*@
+            <div class="form-group mt-3">
+                <button class="btn btn-primary" type="submit">הוסף</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-page="/Index">חזרה למסך הראשי</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script>
-        var nextToInsert = @Model.Items.Count;
-    </script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

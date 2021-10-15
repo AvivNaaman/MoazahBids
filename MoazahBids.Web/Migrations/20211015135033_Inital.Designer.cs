@@ -9,8 +9,8 @@ using MoazahBids.Web.Data;
 namespace MoazahBids.Web.Migrations
 {
     [DbContext(typeof(BidsDbContext))]
-    [Migration("20211013181234_InitalMig")]
-    partial class InitalMig
+    [Migration("20211015135033_Inital")]
+    partial class Inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,6 @@ namespace MoazahBids.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("RequiredQuantity")

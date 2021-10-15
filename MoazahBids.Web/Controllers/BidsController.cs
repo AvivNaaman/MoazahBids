@@ -82,7 +82,15 @@ namespace MoazahBids.Web.Controllers
                 }
                 else ModelState.AddModelError("", "הפריט כבר קיים");
             }
-            return await Edit(id);
+            return RedirectToAction(nameof(Edit), new { id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveItem(int id, string name)
+        {
+            _context.BidsItems.RemoveRange(_context.BidsItems.Where(b => b.Name == name && b.BidId == id));
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Edit), new { id });
         }
 
         [HttpPost]
@@ -126,7 +134,9 @@ namespace MoazahBids.Web.Controllers
             {
                 try
                 {
-                    _context.Update(bid);
+                    _context.Entry(bid).State = EntityState.Modified;
+                    //_context.Update(bid);
+                    _context.Entry(bid).Property(b => b.CreatedDate).IsModified = false;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -140,7 +150,7 @@ namespace MoazahBids.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), new { id });
             }
             return View(bid);
         }
