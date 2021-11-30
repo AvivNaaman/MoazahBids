@@ -43,7 +43,7 @@
         <h4>פריטים</h4>
         <h6>פריטים קיימים</h6>
 
-        @await Html.PartialAsync("BidItemsList", Model.Items)
+        @await Html.PartialAsync("BidItemsList", (Model.Items, true))
 
         <form asp-action="AddItem" method="post" asp-route-id="@Model.Id" class="border rounded-2 p-2 mt-3">
         <h6>פריט חדש</h6>

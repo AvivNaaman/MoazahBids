@@ -99,8 +99,8 @@ namespace MoazahBids.Web.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        // It's a supplier!
-                        await _userManager.AddToRoleAsync(user, "Supplier");
+                        
+                        //await _userManager.AddToRoleAsync(user, "Supplier");
                         return LocalRedirect(returnUrl);
                     }
                 }

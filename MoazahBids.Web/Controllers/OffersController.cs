@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoazahBids.Domain.Entities;
@@ -6,6 +7,7 @@ using MoazahBids.Web.Data;
 using MoazahBids.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,10 +17,12 @@ namespace MoazahBids.Web.Controllers
     public class OffersController : Controller
     {
         private readonly BidsDbContext db;
+        private readonly IWebHostEnvironment env;
 
-        public OffersController(BidsDbContext db)
+        public OffersController(BidsDbContext db, IWebHostEnvironment env)
         {
             this.db = db;
+            this.env = env;
         }
         //[Authorize(Roles = "Supplier")]
         [HttpGet]
@@ -36,7 +40,7 @@ namespace MoazahBids.Web.Controllers
 
         //[Authorize(Roles = "Supplier")]
         [HttpPost]
-        public async Task<IActionResult> NewOffer(int id, [FromForm] NewOfferModel offerModel)
+        public async Task<IActionResult> NewOffer(int id, NewOfferModel offerModel)
         {
             // validate and submit
             if (!ModelState.IsValid)
@@ -44,7 +48,7 @@ namespace MoazahBids.Web.Controllers
                 return View(offerModel);
 
             }
-            
+
             var itemsToFill = await db.BidsItems
                 .Where(bi => bi.BidId == id).ToListAsync();
 
@@ -55,7 +59,9 @@ namespace MoazahBids.Web.Controllers
                 Status = BidOfferStatus.Relevant,
                 IsComplete = CheckComplete(offerModel.ItemNames, offerModel.Prices, itemsToFill),
                 SupplierNotes = offerModel.SupplierNotes,
-                TotalTaxedPrice = CalcTotalPrice(offerModel.Prices)
+                TotalTaxedPrice = CalcTotalPrice(offerModel.Prices),
+                SupplierName = offerModel.SupplierName,
+                FileName = id + Path.GetExtension(offerModel.BidFile.FileName)
             };
 
             using (var t = await db.Database.BeginTransactionAsync())
@@ -73,15 +79,27 @@ namespace MoazahBids.Web.Controllers
                     });
                 }
                 await db.SaveChangesAsync();
+                // save bid file
+                var filePath = Path.Combine(env.WebRootPath, "BidFiles", newOffer.FileName); // wwwroot\BidFiles\id.pdf
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await offerModel.BidFile.CopyToAsync(stream);
+                }
                 t.Commit();
             }
-            
-            return View(newOffer);
+
+            return RedirectToAction("Details", "Bids", new { id });
         }
 
         private decimal CalcTotalPrice(List<decimal?> list)
         {
             return list.Where(i => i.HasValue).Cast<decimal>().Sum();
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var o = await db.Offers.Include(o => o.ItemOffers).FirstOrDefaultAsync(o => o.Id == id);
+            return o is null ? NotFound() : View(o);
         }
 
         private bool CheckComplete(List<string> names, List<decimal?> prices, List<BidItem> toFill) =>

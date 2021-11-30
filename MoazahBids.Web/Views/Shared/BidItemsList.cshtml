@@ -1,4 +1,4 @@
-﻿@model List<BidItem>
+﻿@model (List<BidItem>, bool)
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -6,21 +6,28 @@
 }
 
 <ul class="list-group">
-    @for (var i = 0; i < Model?.Count; i++)
+    @for (var i = 0; i < Model.Item1?.Count; i++)
     {
         <li class="list-group-item">
-            @Model?[i].Name
+            @Model.Item1?[i].Name
             &times;
-            @Model?[i].RequiredQuantity
-            @if (Model?[i].Notes is not null or "")
+            @Model.Item1?[i].RequiredQuantity
+            @if (Model.Item1?[i].Notes is not null or "")
             {
 
                 <a class="btn btn-sm btn-outline-info" data-bs-toggle="collapse" href="#collapseDesc_@i" role="button" aria-expanded="false" aria-controls="collapseExample">
                     הערות
                 </a>
+                @* Show delete button *@
+                @if (Model.Item2)
+                {
+                    <form asp-action="DeleteItem" asp-controller="Bids" asp-area="" asp-route-name="@Model.Item1?[i].Name" asp-route-id="@Model.Item1?[i].BidId" method="post">
+                        <button class="btn btn-outline-danger" type="submit">הסרה</button>
+                    </form>
+                }
                 <div class="collapse mt-2" id="collapseDesc_@i">
                     <div class="card card-body">
-                        @Model?[i].Notes
+                        @Model.Item1?[i].Notes
                     </div>
                 </div>
             }

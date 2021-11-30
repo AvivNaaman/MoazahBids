@@ -29,11 +29,37 @@
     </dl>
 </div>
 <h5>פריטים</h5>
-@await Html.PartialAsync("BidItemsList", Model.Items)
+@await Html.PartialAsync("BidItemsList", (Model.Items, false))
 <hr />
+
+<h5>הצעות מחיר</h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ספק</th>
+            <th>מחיר</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var offer in Model.Offers.OrderBy(o => o.TotalTaxedPrice))
+        {
+            <tr>
+                <td>
+                    <a asp-area="" asp-controller="Offers" asp-action="Details" asp-route-id="@offer.Id">
+                        @offer.SupplierName
+                    </a>
+                </td>
+                <td>
+                    @offer.TotalTaxedPrice₪
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 <h4>ספק?</h4>
 <a class="btn btn-lg btn-primary" asp-action="NewOffer" asp-controller="Offers" asp-route-id="@Model.Id">שלח הצעת מחיר</a>
-   <hr />
+<hr />
 <a asp-action="Edit" asp-route-id="@Model.Id">עריכה</a> |
 <a asp-page="/Index">למסך ראשי</a>
 </div>

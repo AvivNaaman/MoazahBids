@@ -56,9 +56,9 @@ namespace MoazahBids.Web.Services
             }
         }
 
-        public async Task<bool> SubmitBidOffer(int bidId, int supplierId, string supplierNotes, List<BidOfferItem> itemInfo)
+        /*public async Task<bool> SubmitBidOffer(int bidId, int supplierId, string supplierNotes, List<BidOfferItem> itemInfo)
         {
-            var o = await db.Offers.FirstOrDefaultAsync(o => o.BidId == bidId && o.SupplierId == supplierId);
+            var o = await db.Offers.FirstOrDefaultAsync(o => o.BidId == bidId && o.SupplierName == supplierId);
             if (o is not null)
             {
                 return false;
@@ -69,7 +69,7 @@ namespace MoazahBids.Web.Services
                 o = new()
                 {
                     BidId = bidId,
-                    SupplierId = supplierId,
+                    SupplierName = supplierId,
                     SupplierNotes = supplierNotes,
                     Status = BidOfferStatus.Relevant,
                 };
@@ -81,7 +81,7 @@ namespace MoazahBids.Web.Services
                 await ts.CommitAsync();
             }
             return true;
-        }
+        }*/
 
         /// <summary>
         /// Updates the offer is complete/total taxed price
@@ -111,7 +111,7 @@ namespace MoazahBids.Web.Services
         public async Task<List<Bid>> GetPagedBidsWithInfo(int pageNum, int pageSize)
         {
             var toReturn = await db.Bids.Include(b => b.Offers).ToListAsync();
-            toReturn.ForEach(b => b.Offers.OrderBy(o => o.IsComplete).ThenBy(o => o.TotalTaxedPrice).Take(3));
+            toReturn.ForEach(b => b.Offers = b.Offers.OrderBy(o => o.IsComplete).ThenBy(o => o.TotalTaxedPrice).Take(3).ToList());
             return toReturn;
         }
 

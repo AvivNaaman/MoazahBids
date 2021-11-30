@@ -5,16 +5,19 @@
     string GetCellClasses(BidOffer o)
     {
         if (o.IsComplete && o.Status == BidOfferStatus.Relevant)
-            return "bg-success";
+            return "bg-success text-light";
         else if (o.Status == BidOfferStatus.Relevant)
-            return "bg-warning";
+            return "bg-warning text-light";
         else
-            return "bg-danger";
+            return "bg-danger text-dark";
     }
 }
 
 <h2>לוח בקרה</h2>
 <h5>לחץ על דרישה או הצעה לפרטים נוספים אודותיה</h5>
+<div class="mb-2">
+    <a asp-controller="Bids" asp-area="" asp-action="Create" class="btn btn-outline-success">דרישה חדשה</a>
+</div>
 
 <table class="table table-bordered">
     <thead class="table-dark">
@@ -35,7 +38,7 @@
                     if (bid.Offers.Count > i)
                     {
                         var b = bid.Offers[i];
-                        <td class="@GetCellClasses(b)"><a asp-area="" asp-controller="Offers" asp-action="Details" asp-route-id="@b.Id">@b.TotalTaxedPrice : #@b.SupplierId</a></td>
+                        <td class="@GetCellClasses(b)"><a asp-area="" asp-controller="Offers" asp-action="Details" asp-route-id="@b.Id" class="@GetCellClasses(b)">@b.TotalTaxedPrice₪ : @b.SupplierName</a></td>
                     }
                 }
                 @if (bid.Offers.Count < 3)

@@ -9,8 +9,8 @@ using MoazahBids.Web.Data;
 namespace MoazahBids.Web.Migrations
 {
     [DbContext(typeof(BidsDbContext))]
-    [Migration("20211015145135_Identity")]
-    partial class Identity
+    [Migration("20211130145242_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -201,14 +201,19 @@ namespace MoazahBids.Web.Migrations
                     b.Property<int>("BidId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsComplete")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("SupplierName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SupplierNotes")
                         .HasColumnType("TEXT");
@@ -234,7 +239,7 @@ namespace MoazahBids.Web.Migrations
                     b.Property<int>("ProvidableQuantity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("TotalTaxedPrice")
+                    b.Property<decimal?>("TotalTaxedPrice")
                         .HasColumnType("TEXT");
 
                     b.HasKey("OfferId", "ItemName");

@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "pdf.js@2.10.377",
+      "destination": "wwwroot/lib/pdfjs",
+      "provider": "cdnjs"
+    }
+  ]
+}

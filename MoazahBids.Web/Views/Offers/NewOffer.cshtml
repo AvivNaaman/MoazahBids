@@ -9,16 +9,30 @@
 
 <h2>הוסף הצעת מחיר</h2>
 <h6>נא להזין את המחיר של כל פריט, כולל מע"מ.</h6>
-<form method="post" class="">
+<form method="post" enctype="multipart/form-data">
     <div class="row">
-    @for (int i = 0; i < Model.Bid.Items.Count; i++)
-    {
+        @for (int i = 0; i < Model.Bid.Items.Count; i++)
+        {
+            <input type="hidden" asp-for="ItemNames[i]" value="@Model.Bid.Items[i].Name" />
+            <label class="form-label col-6 col-md-3 mb-2" asp-for="Prices[i]">@Model.Bid.Items[i].Name</label>
+            <div class="col-6 col-md-3 mb-2">
+                <input asp-for="Prices[i]" class="form-control" />
+            </div>
+            <hr />
+        }
+    </div>
+    <div class="row">
+        <label class="form-label col-6 col-md-3 mb-2" asp-for="SupplierName">קובץ הצעת מחיר מקורי</label>
         <div class="col-6 col-md-3 mb-2">
-            <label class="form-label" asp-for="Prices[i]">@Model.Bid.Items[i].Name</label>
-            <input asp-for="Prices[i]" class="form-control" />
+            <input asp-for="BidFile" accept="image/*,.pdf" class="form-control mb-2" />
         </div>
-        <hr />
-    }
+    </div>
+    <div class="row">
+        <label class="form-label col-6 col-md-3 mb-2" asp-for="SupplierName">שם הספק</label>
+        <div class="col-6 col-md-3 mb-2">
+            <input asp-for="SupplierName" class="form-control mb-2" />
+
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">שליחת ההצעה</button>
 </form>

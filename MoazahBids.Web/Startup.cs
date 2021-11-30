@@ -47,6 +47,11 @@ namespace MoazahBids.Web
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IBidsService, BidsService>();
+
+            services.ConfigureApplicationCookie(cookie =>
+            {
+                cookie.LoginPath = "/Identity/Account/Login";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

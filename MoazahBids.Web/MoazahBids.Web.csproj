@@ -28,4 +28,8 @@
     <ProjectReference Include="..\MoazahBids.Domain\MoazahBids.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\BidFiles\" />
+  </ItemGroup>
+
 </Project>

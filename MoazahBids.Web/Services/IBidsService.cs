@@ -12,6 +12,6 @@ namespace MoazahBids.Web.Services
         Task EditBidItemAsync(string name, int bidId, int newQuantity, string newNotes);
         Task<int> GetBidPageCount(int pageSize);
         Task<List<Bid>> GetPagedBidsWithInfo(int pageNum, int pageSize);
-        Task<bool> SubmitBidOffer(int bidId, int supplierId, string supplierNotes, List<BidOfferItem> itemInfo);
+        //Task<bool> SubmitBidOffer(int bidId, int supplierId, string supplierNotes, List<BidOfferItem> itemInfo);
     }
 }

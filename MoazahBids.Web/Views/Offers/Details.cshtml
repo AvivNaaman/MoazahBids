@@ -1,0 +1,89 @@
+﻿@model MoazahBids.Domain.Entities.BidOffer
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<div>
+    <h4>BidOffer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SupplierName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SupplierName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SupplierNotes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SupplierNotes)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bid.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsComplete)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsComplete)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalTaxedPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalTaxedPrice)
+        </dd>
+        <dt class="col-sm-2">
+            קובץ הצעת מחיר מהספק
+        </dt>
+        <dd class="col-sm-10">
+            <a href="~/BidFiles/@Model.FileName">פתח</a>
+            @* PDF *@
+            @if (System.IO.Path.GetExtension(Model.FileName).ToLower() == ".pdf")
+            {
+                // perhaps we should do PDF.JS Here?
+            }
+            @* Image *@
+            else
+            {
+                <img src="~/BidFiles/@Model.FileName" alt="bid file" />
+            }
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>מוצר</th>
+            <th>הצעה</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var biditemoffer in Model.ItemOffers)
+        {
+            <tr>
+                <td>@biditemoffer.ItemName</td>
+                <td>
+                    @biditemoffer.TotalTaxedPrice₪
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

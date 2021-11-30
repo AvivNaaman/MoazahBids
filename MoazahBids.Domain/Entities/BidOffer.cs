@@ -10,7 +10,7 @@ namespace MoazahBids.Domain.Entities
     public class BidOffer
     {
         public int Id { get; set; }
-        public int? SupplierId { get; set; }
+        public string SupplierName { get; set; }
         public string? SupplierNotes { get; set; }
         public int BidId { get; set; }
         public Bid Bid { get; set; }
@@ -18,6 +18,7 @@ namespace MoazahBids.Domain.Entities
         public List<BidOfferItem> ItemOffers { get; set; }
         public bool IsComplete { get; set; }
         public decimal TotalTaxedPrice { get; set; }
+        public string FileName { get; set; }
     }
 
     public enum BidOfferStatus

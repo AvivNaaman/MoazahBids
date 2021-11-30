@@ -58,7 +58,7 @@ namespace MoazahBids.Web.Controllers
                 bid.CreatedDate = DateTime.Now;
                 _context.Add(bid);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), new { bid.Id });
             }
             return View(bid);
         }
@@ -88,20 +88,14 @@ namespace MoazahBids.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveItem(int id, string name)
+        public async Task<IActionResult> DeleteItem(int id, string name)
         {
             _context.BidsItems.RemoveRange(_context.BidsItems.Where(b => b.Name == name && b.BidId == id));
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Edit), new { id });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> RemoveItem(string name, int bidId)
-        {
-            _context.RemoveRange(_context.BidsItems.Where(bi => bi.Name == name && bidId == bi.BidId));
-            var r = await _context.SaveChangesAsync();
-            return r is 1 ? Ok() : NotFound();
-        }
+
 
         // GET: Bids/Edit/5
         public async Task<IActionResult> Edit(int? id)
