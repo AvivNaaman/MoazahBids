@@ -8,30 +8,32 @@
     <h4>@Html.DisplayFor(model => model.Name)</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             תיאור
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             תאריך הוספה
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Model.CreatedDate.ToShortDateString()
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             תאריך אחרון להגשת הצעות
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Model.LastCallDate.ToShortDateString()
         </dd>
     </dl>
 </div>
 <h5>פריטים</h5>
 @await Html.PartialAsync("BidItemsList", Model.Items)
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">עריכה</a> |
-    <a asp-page="/Index">למסך ראשי</a>
+<hr />
+<h4>ספק?</h4>
+<a class="btn btn-lg btn-primary" asp-action="NewOffer" asp-controller="Offers" asp-route-id="@Model.Id">שלח הצעת מחיר</a>
+   <hr />
+<a asp-action="Edit" asp-route-id="@Model.Id">עריכה</a> |
+<a asp-page="/Index">למסך ראשי</a>
 </div>

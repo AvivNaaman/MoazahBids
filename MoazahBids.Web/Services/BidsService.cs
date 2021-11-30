@@ -93,7 +93,7 @@ namespace MoazahBids.Web.Services
 
             offer.IsComplete = requiredItems.Select(ri => ri.Name).Except(items.Select(ii => ii.ItemName)).Count() == 0 &&
                         requiredItems.All(ri => items.Any(ii => ii.ProvidableQuantity == ri.RequiredQuantity));
-            offer.TotalTaxedPrice = items.Sum(ii => ii.TotalTaxedPrice);
+            //offer.TotalTaxedPrice = items.Sum(ii => ii.TotalTaxedPrice);
         }
 
         public async Task<bool> CancelOffer(int offerId)

@@ -9,7 +9,7 @@ namespace MoazahBids.Domain.Entities
         public string ItemName { get; set; }
         public int OfferId { get; set; }
         public int ProvidableQuantity { get; set; }
-        public decimal TotalTaxedPrice { get; set; }
+        public decimal? TotalTaxedPrice { get; set; }
         public BidOffer Offer { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using MoazahBids.Web.Models;
 
 namespace MoazahBids.Web.Controllers
 {
+    [Authorize]
     public class BidsController : Controller
     {
         private readonly BidsDbContext _context;
