@@ -4,7 +4,7 @@
   "libraries": [
     {
       "library": "pdf.js@2.10.377",
-      "destination": "wwwroot/lib/pdfjs",
+      "destination": "wwwroot/lib/pdfjs/dist",
       "provider": "cdnjs"
     }
   ]
