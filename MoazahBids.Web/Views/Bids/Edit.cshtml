@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 נוצר
-                <input asp-for="CreatedDate"  class="form-control" disabled />
+                <input asp-for="CreatedDate" class="form-control" disabled />
             </div>
             <div class="form-group">
                 תאריך אחרון להגשת הצעות
@@ -46,7 +46,7 @@
         @await Html.PartialAsync("BidItemsList", (Model.Items, true))
 
         <form asp-action="AddItem" method="post" asp-route-id="@Model.Id" class="border rounded-2 p-2 mt-3">
-        <h6>פריט חדש</h6>
+            <h6>פריט חדש</h6>
             <input type="hidden" name="BidId" value="@Model.Id" />
             <div class="form-group">
                 <label class="control-label">שם המוצר</label>
@@ -67,12 +67,16 @@
     </div>
 </div>
 
+<div class="my-2">
+    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@Model.Id">מחיקה</a>
+</div>
+
 <div>
     <a asp-page="/Index">חזרה למסך הראשי</a>
 </div>
 
 @section Scripts {
     @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

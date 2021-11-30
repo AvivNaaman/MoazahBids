@@ -43,10 +43,17 @@ namespace MoazahBids.Web.Controllers
         public async Task<IActionResult> NewOffer(int id, NewOfferModel offerModel)
         {
             // validate and submit
+            // can't have a negative price!
+            if (offerModel.Prices.Any(p => p < 0 || !p.HasValue))
+            {
+                ModelState.AddModelError(nameof(offerModel.Prices), "חובה למלא את כל המחירים, ואסור שיהיו שליליים!");
+            }
+
             if (!ModelState.IsValid)
             {
+                offerModel.Bid = await db.Bids.Include(b => b.Items)
+                    .FirstOrDefaultAsync(b => b.Id == id);
                 return View(offerModel);
-
             }
 
             var itemsToFill = await db.BidsItems

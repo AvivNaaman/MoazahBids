@@ -22,6 +22,9 @@ namespace MoazahBids.Web.Controllers
             _context = context;
         }
 
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult Index() => Redirect("/");
+
         // GET: Bids/Details/5
         public async Task<IActionResult> Details(int? id)
         {

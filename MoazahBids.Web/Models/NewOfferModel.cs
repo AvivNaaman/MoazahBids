@@ -17,7 +17,7 @@ namespace MoazahBids.Web.Models
         [Required(ErrorMessage = "Please select a file.")]
         [DataType(DataType.Upload)]
         [MaxFileSize(5 * 1024 * 1024)] // 5mb
-        [AllowedExtensions(new string[] { ".jpg", ".pdf", ".png" })]
+        [AllowedExtensions(new string[] { ".jpg",".jpeg", ".pdf", ".png" })]
         [FromForm]
         public IFormFile BidFile { get; set; }
         [Required]

@@ -50,7 +50,7 @@
             קובץ הצעת מחיר מהספק
         </dt>
         <dd class="col-sm-10">
-            <a href="~/BidFiles/@Model.FileName">פתח</a>
+            <a href="~/BidFiles/@Model.FileName" target="_blank">פתח</a>
             @* PDF *@
             @if (System.IO.Path.GetExtension(Model.FileName).ToLower() == ".pdf")
             {
