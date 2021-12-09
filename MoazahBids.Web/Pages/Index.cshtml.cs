@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace MoazahBids.Web.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
 

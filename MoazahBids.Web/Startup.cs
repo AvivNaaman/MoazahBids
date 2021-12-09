@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using MoazahBids.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using MoazahBids.Web.Helpers;
+using MoazahBids.Web.Models;
 
 namespace MoazahBids.Web
 {
@@ -28,6 +30,10 @@ namespace MoazahBids.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions<AppConfig>()
+                .Bind(Configuration.GetSection("AppCfg"));
+
+
             services.AddAntiforgery();
             services.AddRazorPages();
 
@@ -35,6 +41,7 @@ namespace MoazahBids.Web
             services.AddDbContext<BidsDbContext>(db => db.UseSqlite(Configuration.GetConnectionString("Bids")));
 
             services.AddScoped<IEmailSender, FakeEmailSender>();
+            services.AddTransient<MigrationHelper>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(identity =>
             {
@@ -51,12 +58,17 @@ namespace MoazahBids.Web
             services.ConfigureApplicationCookie(cookie =>
             {
                 cookie.LoginPath = "/Identity/Account/Login";
+                cookie.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                cookie.LogoutPath = "/Identity/Account/Logout";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MigrationHelper migrationHelper)
         {
+            migrationHelper.Migrate().Wait();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -12,7 +12,7 @@ using MoazahBids.Web.Models;
 
 namespace MoazahBids.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class BidsController : Controller
     {
         private readonly BidsDbContext _context;
@@ -26,6 +26,7 @@ namespace MoazahBids.Web.Controllers
         public IActionResult Index() => Redirect("/");
 
         // GET: Bids/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
